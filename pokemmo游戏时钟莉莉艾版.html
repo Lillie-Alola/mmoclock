@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pokemmo游戏时间</title>
+    <style>
+	
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 8px;
+            line-height: 1.2;
+			background-image: url('https://images6.alphacoders.com/131/thumb-1920-1317101.jpeg');
+			background-size: cover; /* 使背景图片覆盖整个屏幕 */
+			background-position: center;
+			background-repeat: no-repeat; /* 防止图片重复 */
+			background-attachment: fixed; /* 当滚动页面时背景保持固定 */
+			transition: background 1s ease-in-out; /* 平滑过渡效果 */
+		}
+        .container {
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		}
+		
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="datetime-local"] {
+            background-color: rgba(232, 222, 242, 0.5);
+			width: 40%;
+			
+			
+            padding: 5px;
+            border: 1px solid rgba(202, 222, 242, 0.6);
+            border-radius: 40px;
+            box-sizing: border-box;
+
+        }
+        button {
+            background-color: rgba(60, 70, 242, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: rgba(80, 60, 222, 0.8);
+        }
+        .result {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: rgba(202, 182, 242, 0.22);
+            border-radius: 4px;
+        }
+        .timestamp {
+            font-family: monospace;
+            word-break: break-all;
+        }
+		/* 白天背景 */
+		body.day {
+			background-image: url('https://images2.alphacoders.com/114/thumb-1920-1140432.jpg');
+		}
+
+		/* 夜晚背景 */
+		body.night {
+			background-image: url('https://c-ssl.duitang.com/uploads/blog/202103/15/20210315075235_b019d.jpg');
+		}
+		@media screen and (max-width: 600px) {
+			body.day {
+				background-image: url('https://c-ssl.duitang.com/uploads/blog/202103/15/20210315075316_f41af.jpg');
+				background-size: cover;
+			}
+			body.night {
+				background-image: url('https://img2.huashi6.com/images/resource/2019/06/19/h75305304p0.png?imageMogr2/quality/75/interlace/1/thumbnail/1400x/gravity/North/crop/1400x2142/format/webp');
+			}
+		}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+	    
+        <h1>pokemmo游戏时间</h1>
+        <h2>pokemmo中21:00-04:00为夜晚</h2>
+		<h3>对应北京时间01:15-03:00; 07:15-09:00; 13:15-15:00; 19:15-21:00</h3>
+		<p>现实一小时等于游戏四小时</p>
+        <div class="form-group">
+            <label for="datetime">选择指定时间：</label>
+            <input type="datetime-local" id="datetime">
+        </div>
+        
+        <button onclick="getTimeStamp()">查询</button>
+        
+        <div class="result" id="result">
+			<h1><strong>下一次游戏中周末在<span class="timestamp" id="weekendTimestampSecondsmmo"></span>后</strong></h1>
+			<h2><strong>查询游戏时间：</strong><span class="timestamp" id="specifiedTimestampSecondsmmo"></span></h2>
+			<h2>当前游戏时间：<span class="timestamp" id="currentTimestampSecondsmmo"></span></h2>
+            <p><strong>当前时间戳：</strong><span class="timestamp" id="currentTimestampSeconds"></span></p>
+			
+			
+            <p><strong>查询时间时间戳：</strong><span class="timestamp" id="specifiedTimestampSeconds"></span></p>
+			
+
+        </div>
+		
+
+	</div>
+
+
+
+    <script>
+        // 页面加载时显示当前时间戳
+        window.onload = function() {
+            updateCurrentTimestamp();
+            // 每秒更新一次当前时间戳
+            setInterval(updateCurrentTimestamp, 1000);
+        };
+		function updateBackgroundByGameTime(gameHour) {
+			const body = document.body;
+
+    // 判断是否为夜晚：游戏时间 21:00 至 04:00
+			if (gameHour >= 21 || gameHour < 4) {
+			body.classList.remove('day');
+			body.classList.add('night');
+			} else {
+				body.classList.remove('night');
+				body.classList.add('day');
+				}
+			}
+        function updateCurrentTimestamp() {
+            const now = new Date();
+			t = Math.floor(now.getTime() / 1000);
+            document.getElementById('currentTimestampSeconds').textContent = t;
+			a = (t-1758819600)*4;
+			a = a+72000;
+			b = Math.floor(a/604800);
+			a = a - b*604800;
+			a1 = (1036800 - a)/4
+			d1 = Math.floor(a1/3600);
+			a1 = a1 - d1*3600;
+			e1 = Math.floor(a1/60);
+			f1 = a1 - e1*60;
+			c = Math.floor(a/86400);
+			a = a - c*86400;
+			c = c + 1;
+			d = Math.floor(a/3600);
+			a = a - d*3600;
+			e = Math.floor(a/60);
+			f = a - e*60;
+			document.getElementById('currentTimestampSecondsmmo').textContent ='周'+ c +'--'+d+'时'+e+'分'+f +'秒';
+			document.getElementById('weekendTimestampSecondsmmo').textContent =d1+'时'+e1+'分'+f1 +'秒';
+			updateBackgroundByGameTime(d);
+        }
+
+        function getTimeStamp() {
+            const datetimeInput = document.getElementById('datetime').value;
+            
+            if (!datetimeInput) {
+                alert('请输入指定时间');
+                return;
+            }
+            
+            const specifiedDate = new Date(datetimeInput);
+			t = Math.floor(specifiedDate.getTime() / 1000);
+            const timestampSeconds = t;
+			a = (t-1758819600)*4;
+			a = a+72000;
+			b = Math.floor(a/604800);
+			a = a - b*604800;
+			c = Math.floor(a/86400);
+			a = a - c*86400;
+			c = c + 1;
+			d = Math.floor(a/3600);
+			a = a - d*3600;
+			e = Math.floor(a/60);
+			f = a - e*60;
+			document.getElementById('specifiedTimestampSecondsmmo').textContent ='周'+ c +'--'+d+'时'+e+'分'; 
+            document.getElementById('specifiedTimestampSeconds').textContent = timestampSeconds;
+		}
+
+    </script>
+</body>
+</html>

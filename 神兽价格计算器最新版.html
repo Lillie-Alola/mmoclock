@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神兽价格计算器</title>
+</head>
+<body>
+    <h2>三鸟用宝珠、三狗用羽毛、基拉祈用空白愿望签、谢米用葛拉西蒂亚花</h2>
+    <label for="num1">神兽售价:</label>
+    <input type="number" id="num1" value="0"><br><br>
+
+    <label for="num2">神兽总个体值:</label>
+    <input type="number" id="num2" value="0"><br><br>
+
+    <label for="num3">不要的一项个体值:</label>
+    <input type="number" id="num3" value="0"><br><br>
+
+    <label for="num4">改个体道具单价:</label>
+    <input type="number" id="num4" value="0"><br><br>
+
+    <label for="num5">性格草售价:</label>
+    <input type="number" id="num5" value="0"><br><br>
+
+    <button onclick="calculate()">计算</button>
+
+    <p>5v对价格: <span id="result"></span></p>
+    <p>需要道具数量: <span id="result1"></span></p>
+    <p>6v对价格: <span id="result2"></span></p>
+    <p>需要道具数量: <span id="result3"></span></p>
+
+    <script>
+        function calculate() {
+            // 获取输入值
+            var num1 = parseFloat(document.getElementById('num1').value) || 0;
+            var num2 = parseFloat(document.getElementById('num2').value) || 0;
+            var num3 = parseFloat(document.getElementById('num3').value) || 0;
+            var num4 = parseFloat(document.getElementById('num4').value) || 0;
+            var num5 = parseFloat(document.getElementById('num5').value) || 0;
+
+            // 执行计算
+            var sum = num1 + (155 - num2 + num3) * num4 + num5;
+            var sum1 = 155 - num2 + num3;
+            var sum2 = num1 + (186 - num2) * num4 + num5;
+            var sum3 = 186 - num2;
+
+            // 格式化结果并添加千位分隔符
+            document.getElementById('result').textContent = sum.toLocaleString();
+            document.getElementById('result1').textContent = sum1.toLocaleString();
+            document.getElementById('result2').textContent = sum2.toLocaleString();
+            document.getElementById('result3').textContent = sum3.toLocaleString();
+        }
+
+    </script>
+</body>
+</html>
